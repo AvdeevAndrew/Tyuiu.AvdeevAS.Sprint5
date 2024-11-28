@@ -7,7 +7,7 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task0.V14.Lib
 
         public string SaveToFileTextData(int x)
         {
-            string path = $@"{Directory.GetCurrentDirectory()}\OutPutFileTask0.txt";
+            string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask0.txt");
             if (x * x * x - 1 == 0)
                 throw new DivideByZeroException("Деление на ноль в знаменателе.");
             double y = (4 * Math.Pow(x, 3)) / (Math.Pow(x, 3) - 1);
