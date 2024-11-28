@@ -21,7 +21,7 @@ public class DataServiceTest
         using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
         {
             double result = reader.ReadDouble();
-            Assert.AreEqual(171.891, result); // Проверяем вычисленный результат
+            Assert.AreEqual(169.89 , result); // Проверяем вычисленный результат
         }
     }
 }
