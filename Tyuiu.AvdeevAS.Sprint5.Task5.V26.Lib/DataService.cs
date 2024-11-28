@@ -8,35 +8,44 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task5.V26.Lib
     {
         public double LoadFromDataFile(string path)
         {
-            if (!File.Exists(path))
-            {
-                throw new FileNotFoundException($"Файл по пути {path} не найден.");
-            }
-
-            string fileContent = File.ReadAllText(path);
-            string[] values = fileContent.Split(new[] { ' ', '\n', '\r', '\t', ',' }, StringSplitOptions.RemoveEmptyEntries);
-
             double positiveSum = 0;
             double negativeSum = 0;
 
-            foreach (string value in values)
+            using (StreamReader reader = new StreamReader(path))
             {
-                string sanitizedValue = value.Replace(",", ".").Trim(); // Обрабатываем числа с запятыми
-                if (double.TryParse(sanitizedValue, NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
+                string line;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    if (number > 0)
+                    string[] numbers = line.Split(' ');
+
+                    foreach (string number in numbers)
                     {
-                        positiveSum += number; // Округляем каждое положительное число
-                    }
-                    else if (number < 0 && sanitizedValue.Contains(".")) // Условие: число отрицательное и дробное
-                    {
-                        negativeSum += number; // Суммируем только отрицательные вещественные числа
+                        if (number.Contains(".") || number.Contains(","))
+                        {
+                            if (double.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out double value))
+                            {
+                                if (value > 0)
+                                {
+                                    positiveSum += value;               //  positiveSum будет   +
+                                }
+                                else if (value < 0)
+                                {
+                                    negativeSum += value;               // negativeSum будет    -
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Не удалось преобразовать '{number}' в double.");
+                            }
+                        }
                     }
                 }
+
             }
 
-            double result = positiveSum - Math.Abs(negativeSum); // Разница между положительными и отрицательными
-            return Math.Round(result, 3); // Округляем до 3 знаков
+
+            double difference = positiveSum + Math.Abs(negativeSum);          // negativeSum отрицательный, поэтому берем abs
+            return Math.Round(difference, 3);
+        }
         }
     }
-}
