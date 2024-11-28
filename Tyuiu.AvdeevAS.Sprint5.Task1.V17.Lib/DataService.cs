@@ -28,7 +28,7 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task1.V17.Lib
                     {
                         fx = 0; // Любые другие ошибки также приводят к значению 0
                     }
-                    writer.WriteLine($"{x}\t{Math.Round(fx, 2)}");
+                    writer.WriteLine($"{Math.Round(fx, 2)}");
                 }
             }
             return path;
