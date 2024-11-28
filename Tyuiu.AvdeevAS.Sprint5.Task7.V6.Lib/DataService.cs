@@ -18,7 +18,7 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task7.V6.Lib
             string updatedContent = Regex.Replace(fileContent, "[a-zA-Z]", "#");
 
             // Путь для сохранения нового файла
-            string outputPath = Path.Combine(Path.GetDirectoryName(path), "OutPutDataFileTask7V6.txt");
+            string outputPath = Path.Combine(Path.GetTempPath(), "OutPutDataFileTask7V6.txt");
 
             // Сохранение результата в новый файл
             File.WriteAllText(outputPath, updatedContent);
