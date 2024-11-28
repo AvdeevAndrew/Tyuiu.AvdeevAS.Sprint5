@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
+using System.IO;
 using tyuiu.cources.programming.interfaces.Sprint5;
 namespace Tyuiu.AvdeevAS.Sprint5.Task5.V26.Lib
 {
@@ -11,32 +13,30 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task5.V26.Lib
                 throw new FileNotFoundException($"Файл по пути {path} не найден.");
             }
 
-            // Считываем весь текст из файла и разделяем его по пробелам
             string fileContent = File.ReadAllText(path);
-            string[] values = fileContent.Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] values = fileContent.Split(new[] { ' ', '\n', '\r', '\t', ',' }, StringSplitOptions.RemoveEmptyEntries);
 
             double positiveSum = 0;
             double negativeSum = 0;
 
             foreach (string value in values)
             {
-                // Парсим значение с использованием InvariantCulture
-                if (double.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
+                string sanitizedValue = value.Replace(",", ".").Trim(); // Обрабатываем числа с запятыми
+                if (double.TryParse(sanitizedValue, NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
                 {
-                    number = Math.Round(number, 3); // Округляем до 3 знаков
                     if (number > 0)
                     {
-                        positiveSum += number;
+                        positiveSum += number; // Округляем каждое положительное число
                     }
-                    else
+                    else if (number < 0 && sanitizedValue.Contains(".")) // Условие: число отрицательное и дробное
                     {
-                        negativeSum += number;
+                        negativeSum += number; // Суммируем только отрицательные вещественные числа
                     }
                 }
             }
 
-            double result = positiveSum - Math.Abs(negativeSum); // Разница между суммами
-            return Math.Round(result, 3); // Округляем результат до 3 знаков
+            double result = positiveSum - Math.Abs(negativeSum); // Разница между положительными и отрицательными
+            return Math.Round(result, 3); // Округляем до 3 знаков
         }
     }
 }
