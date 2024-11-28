@@ -11,23 +11,26 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task5.V26.Lib
                 throw new FileNotFoundException($"Файл по пути {path} не найден.");
             }
 
-            string[] lines = File.ReadAllLines(path); // Чтение строк из файла
+            // Считываем весь текст из файла и разделяем его по пробелам
+            string fileContent = File.ReadAllText(path);
+            string[] values = fileContent.Split(new[] { ' ', '\n', '\r', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
             double positiveSum = 0;
             double negativeSum = 0;
 
-            foreach (string line in lines)
+            foreach (string value in values)
             {
-                if (double.TryParse(line.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
+                // Парсим значение с использованием InvariantCulture
+                if (double.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out double number))
                 {
-                    value = Math.Round(value, 3); // Округляем до 3 знаков
-                    if (value > 0)
+                    number = Math.Round(number, 3); // Округляем до 3 знаков
+                    if (number > 0)
                     {
-                        positiveSum += value;
+                        positiveSum += number;
                     }
                     else
                     {
-                        negativeSum += value;
+                        negativeSum += number;
                     }
                 }
             }
