@@ -18,7 +18,7 @@ public class DataServiceTest
 
         // Проверяем содержимое файла
         string[] lines = File.ReadAllLines(filePath);
-        Assert.AreEqual("x\tF(x)", lines[0]); // Первая строка - заголовок
-        Assert.AreEqual(12, lines.Length); // Проверяем, что строк 11 (от -5 до 5 включительно)
+        
+        Assert.AreEqual(11, lines.Length); // Проверяем, что строк 11 (от -5 до 5 включительно)
     }
 }

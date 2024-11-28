@@ -8,7 +8,7 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task1.V17.Lib
             string path = Path.Combine(Path.GetTempPath(), "OutPutFileTask1.txt");
             using (StreamWriter writer = new StreamWriter(path))
             {
-                writer.WriteLine("x\tF(x)");
+                
                 for (int x = startValue; x <= stopValue; x++)
                 {
                     double fx;
