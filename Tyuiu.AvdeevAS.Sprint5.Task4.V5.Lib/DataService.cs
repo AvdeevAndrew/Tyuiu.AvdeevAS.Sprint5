@@ -14,7 +14,7 @@ namespace Tyuiu.AvdeevAS.Sprint5.Task4.V5.Lib
             // Чтение значения из файла
             string fileContent = File.ReadAllText(path);
 
-           double x = double.Parse(fileContent);
+            double x = double.Parse(fileContent.Replace('.', ','));
 
             // Проверка на деление на ноль
             double denominator = Math.Sin(x);
